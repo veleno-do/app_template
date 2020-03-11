@@ -12,20 +12,46 @@ namespace MyMVC\Core\Middleware;
 
 abstract class App
 {
+    /**
+     * This variable stores the http response obtained by the getResponse method.
+     *
+     * @var string  text/html or application/json
+     */
     public $response;
 
     public function getResponse()
     {
         if( $this->route::$STATUS ){
-            echo var_dump( $this->route::$routingTable );
+            $this->response = $this->route->evaluation();
         }
     }
 
 
+    /**
+     * Send html to the client as a response.
+     * If output is started before calling the send method, it will not work properly.
+     * There are response types in application / json and text / html.
+     * The description of the response header is changed for each type of response.
+     * 
+     * レスポンスとしてhtmlをクライアントに送信します。
+     * sendメソッドの呼び出し前にoutputを開始すると正常に動作しません。
+     * レスポンスの種類はapplication/jsonとtext/htmlの二種類あります。
+     * レスポンスの種類別でレスポンスヘッダの記述を変えています。
+     *
+     * @return  string  text/html
+     */
     public function send()
     {
         if( $this->views::$STATUS ){
-            echo "view";
+            if( is_string( $this->response ) && is_array( json_decode( $this->response, TRUE ) ) && ( json_last_error() == JSON_ERROR_NONE ) ? TRUE : FALSE ){      // => Judges whether the response type is json or not.
+                // Case what $this->response is application/json
+                header( "Content-Type: application/json" );
+                echo $this->response;
+            }else{
+                // Case what $this->response is not application/json
+                header( "Content-Type: text/html" );
+                echo $this->response;
+            }
         }        
     }
 
