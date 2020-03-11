@@ -1,0 +1,4 @@
+Plugin 追加する際に編集しなければいけない箇所
+    追加するプラグインをおくディレクトリ    => /framework/core/Plugin
+    設定ファイル（クラスコンストラクト）    => /framework/config/Env.php
+    プロバイダ登録                      => /framework/core/Application.php

@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: improved_type_app_template_mysql_host
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=default_app
+      - MYSQL_USER=default
+      - MYSQL_PASSWORD=default
+    ports:
+      - 3306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+ 
+  php:
+    container_name: improved_type_app_template_php
+    build:
+      context: ./php
+    volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./src:/var/www/html
+    ports:
+      - 8080:80
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: improved_type_app_template_phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
+    links:
+      - mysql
+    ports:
+       - 8000:80
+    volumes:
+       - /sessions
