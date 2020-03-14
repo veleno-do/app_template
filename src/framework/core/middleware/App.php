@@ -19,21 +19,31 @@ abstract class App
      */
     public $response;
 
+
+    /**
+     * Pass the appropriate provider to start the routing process and get the response from the appropriate controller.
+     * Store the obtained response in $ this-> response and prepare to send it to the client by the send method.
+     * 
+     * 適当なプロバイダを渡してルーティング処理を開始させ、適切なコントローラーからレスポンスを取得します。
+     * 取得したレスポンスは、$this->responseに格納し、sendメソッドによりクライアントに送信する準備を行います。 
+     *
+     * @return  void
+     */
     public function getResponse()
     {
         if( $this->route::$STATUS ){
-            $this->response = $this->route->evaluation();
+            $this->response = $this->route->evaluation( $this->auth, $this->broadcasting, $this->exceptions, $this->pagenation, $this->validation, $this->views );
         }
     }
 
 
     /**
-     * Send html to the client as a response.
+     * Send the response to the client.
      * If output is started before calling the send method, it will not work properly.
      * There are response types in application / json and text / html.
      * The description of the response header is changed for each type of response.
      * 
-     * レスポンスとしてhtmlをクライアントに送信します。
+     * レスポンスをクライアントに送信します。
      * sendメソッドの呼び出し前にoutputを開始すると正常に動作しません。
      * レスポンスの種類はapplication/jsonとtext/htmlの二種類あります。
      * レスポンスの種類別でレスポンスヘッダの記述を変えています。
@@ -42,17 +52,15 @@ abstract class App
      */
     public function send()
     {
-        if( $this->views::$STATUS ){
-            if( is_string( $this->response ) && is_array( json_decode( $this->response, TRUE ) ) && ( json_last_error() == JSON_ERROR_NONE ) ? TRUE : FALSE ){      // => Judges whether the response type is json or not.
-                // Case what $this->response is application/json
-                header( "Content-Type: application/json" );
-                echo $this->response;
-            }else{
-                // Case what $this->response is not application/json
-                header( "Content-Type: text/html" );
-                echo $this->response;
-            }
-        }        
+        if( is_string( $this->response ) && is_array( json_decode( $this->response, TRUE ) ) && ( json_last_error() == JSON_ERROR_NONE ) ? TRUE : FALSE ){      // => Judges whether the response type is json or not.
+            // Case what $this->response is application/json        => $this->responseがapplication/jsonの場合
+            header( "Content-Type: application/json" );
+            echo $this->response;
+        }else{
+            // Case what $this->response is not application/json    => $this->responseがtext/htmlの場合
+            header( "Content-Type: text/html" );
+            echo $this->response;
+        }
     }
 
 
@@ -104,7 +112,6 @@ abstract class App
         ini_set( "session.gc_maxlifetime", $this->env->SESSION_MAXLIFETIME );
     }
 
-    
     
     /**
      * Is a constructor.

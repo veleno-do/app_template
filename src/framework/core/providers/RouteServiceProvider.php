@@ -2,8 +2,8 @@
 
 namespace MyMVC\Core\Providers;
 
-use \MyMVC\Core\Providers\ApplicationServiceProviderInterface as ProviderInterface;
-use \MyMVC\Core\Router\Route as Route;
+use \MyMVC\Core\Providers\ApplicationServiceProviderInterface as ProviderInterface;     // => ./ApplicationServiceProviderInterface.php
+use \MyMVC\Core\Router\Route as Route;                                                  // => /framework/core/router/Route.php
 
 class RouteServiceProvider extends Route implements ProviderInterface
 {
@@ -20,13 +20,28 @@ class RouteServiceProvider extends Route implements ProviderInterface
      * 
      * RouteProviderの状態を表します。
      *
-     * @var boolean
+     * @var     boolean
      */
     public static $STATUS;
 
 
+    /**
+     * Undocumented variable
+     *
+     * @var     object
+     */
     public static $route;
 
+
+    /**
+     * Creates and returns a class object that can access all of the routing features.
+     * And call the boot method.
+     * 
+     * ルーティングの機能の全てにアクセスする事ができるクラスオブジェクトを作成し返します。
+     * bootメソッドを呼び出します。
+     *
+     * @return object
+     */
     public static function register()
     {
         if( !isset( self::$route ) ){
@@ -36,6 +51,16 @@ class RouteServiceProvider extends Route implements ProviderInterface
     }
 
 
+    /**
+     * Make the provider available. Also, read routing rules from Web.php and Api.php and store them in a tree structure.
+     * Returns the instantiated RouteServiceProvider class object.
+     * 
+     * プロバイダを使用可能な状態にします。又、Web.phpとApi.phpからルーティングルールを読み込み、ツリー構造にして格納します。
+     * インスタンス化されたRouteServiceProviderクラスオブジェクトを返します。
+     *
+     * @param   object  $routeInstance
+     * @return  object
+     */
     public function boot( $routeInstance )
     {
         self::$STATUS = READY;

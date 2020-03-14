@@ -16,15 +16,13 @@
  * 以下に各リクエスト毎の説明を記述します。このファイルは編集可です。
  * 
  * 
- * Route::get( "<path>", "<Controller@Identify>or<function>" )      =>  Add rules for get requests. Getリクエストのルールを追加します。
+ * $this->get( "<path>", "<Controller@Identify>or<function>" )      =>  Add rules for get requests. Getリクエストのルールを追加します。
  * 
- * Route::post( "<path>", "<Controller@Identify>or<function>" )     =>  Add rules for post requests. Postリクエストのルールを追加します。
+ * $this->post( "<path>", "<Controller@Identify>or<function>" )     =>  Add rules for post requests. Postリクエストのルールを追加します。
  * 
- * Route::put( "<path>", "<Controller@Identify>or<function>" )      =>  Add rules for put requests. Putリクエストのルールを追加します。
+ * $this->put( "<path>", "<Controller@Identify>or<function>" )      =>  Add rules for put requests. Putリクエストのルールを追加します。
  * 
- * Route::delete( "<path>", "<ControllerpIdentify>or<function>" )   =>  Add rules for delete requests. Deleteリクエストのルールを追加します。
- * 
- * Route::parameter( "<parameter name (ex)id>", "<rules>" )         =>  Add rules for pattern of parameters. パラメーターのパターンのルールを追加します。
+ * $this->delete( "<path>", "<ControllerpIdentify>or<function>" )   =>  Add rules for delete requests. Deleteリクエストのルールを追加します。
  */
 
 $this->get( "/", "view@welcome" );

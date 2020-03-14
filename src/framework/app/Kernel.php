@@ -37,10 +37,8 @@ $app = new HttpApplication;
  * -------------------------------------
  * 
  * Analyzes the request from the obtained application instance and obtains the response.
- * The return value is the instantiated object.
  * 
  * アプリケーションインスタンスからgetResponseメソッドを呼び出して、レスポンスを取得します。
- * 型はオブジェクトです。
  */
 $app->getResponse();
 

@@ -9,7 +9,7 @@
 
 namespace MyMVC\Core\Router;
 
-abstract class RouteTable
+abstract class RouteTree
 {
     /**
      * This is the body of the routing table.
@@ -20,11 +20,7 @@ abstract class RouteTable
      *
      * @var array
      */
-    public static $routingTable = [
-        "get"       =>  [],
-        "post"      =>  [],
-        "put"       =>  [],
-        "delete"    =>  [],
-        "parameter" =>  [],
+    public $routingTree = [
+        "/" => []
     ];
 }
