@@ -12,52 +12,7 @@ namespace MyMVC\Core\Router;
 
 abstract class Route extends RequestMethodMapper
 {
-    /**
-     * This is the storage location of auth provider.
-     *
-     * @var object
-     */
-    public $auth;
-
-
-    /**
-     * This is the storage location of broadcasting provider.
-     *
-     * @var object
-     */
-    public $broadcasting;
-
-
-    /**
-     * This is the storage location of exceptions provider.
-     *
-     * @var object
-     */
-    public $exceptions;
-
-
-    /**
-     * This is the storage location of pagenation provider.
-     *
-     * @var object
-     */
-    public $pagenation;
-
-
-    /**
-     * This is the storage location of validation provider.
-     *
-     * @var object
-     */
-    public $validation;
-
-
-    /**
-     * This is the storage location of views provider.
-     *
-     * @var object
-     */
-    public $views;
+    public $app;
 
 
     public function main()
@@ -78,32 +33,72 @@ abstract class Route extends RequestMethodMapper
 
 
     /**
-     * This is the front function of routing.
-     * This function does nothing.
-     * Store in variables of various providers and call main method.
+     * This is the front method that starts response acquisition.
+     * Call main method.
      * 
-     * routingのフロント関数です。
-     * この関数自体は特に何もしません。
-     * 各種プロバイダの変数への格納とmainメソッドの呼び出しを行います。
+     * レスポンス取得を開始するフロントメソッドです。
+     * mainメソッドを呼びます。
      *
-     * @param   object  $auth
-     * @param   object  $broadcasting
-     * @param   object  $exceptions
-     * @param   object  $pagenation
-     * @param   object  $validation
-     * @param   object  $views
-     * @return  string  application/json or text/html
+     * @param   object  $app
+     * @return  string
      */
-    public function evaluation( $auth, $broadcasting, $exceptions, $pagenation, $validation, $views )
+    public function evaluation( $app )
     {
-        if( isset( $auth, $broadcasting, $exceptions, $pagenation, $validation, $views ) ){
-            $this->auth = $auth;
-            $this->broadcasting = $broadcasting;
-            $this->exceptions = $exceptions;
-            $this->pagenation = $pagenation;
-            $this->validation = $validation;
-            $this->views = $views;
-        }
-        return $this->main();
+        $this->app = $app;
+        echo var_dump( get_class_methods( $this->session() ) );
+    }
+
+
+    public function cache()
+    {
+        return $this->app->cache;
+    }
+
+
+    public function cookie()
+    {
+        return $this->app->cookie;
+    }
+
+
+    public function session()
+    {
+        return $this->app->session;
+    }
+
+
+    public function auth()
+    {
+        return $this->app->auth;
+    }
+
+
+    public function broadcasting()
+    {
+        return $this->app->broadcasting;
+    }
+
+
+    public function exceptions()
+    {
+        return $this->app->exceptions;
+    }
+
+
+    public function pagenation()
+    {
+        return $this->app->pagenation;
+    }
+
+
+    public function validation()
+    {
+        return $this->app->validation;
+    }
+
+
+    public function views()
+    {
+        return $this->app->views;
     }
 }

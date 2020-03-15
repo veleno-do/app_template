@@ -32,7 +32,7 @@ abstract class App
     public function getResponse()
     {
         if( $this->route::$STATUS ){
-            $this->response = $this->route->evaluation( $this->auth, $this->broadcasting, $this->exceptions, $this->pagenation, $this->validation, $this->views );
+            $this->response = $this->route->evaluation( $this );
         }
     }
 

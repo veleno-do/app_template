@@ -10,9 +10,10 @@
 
 namespace MyMVC\Core\Storage\Providers;
 
-use \MyMVC\Core\Storage\Session as Session;     // => /framework/core/storage/Session.php
+use \MyMVC\Core\Providers\ApplicationServiceProviderInterface as ProviderInterface;     // => /framework/core/providers/ApplicationServiceProviderInterface.php
+use \MyMVC\Core\Storage\Session as Session;                                             // => /framework/core/storage/Session.php
 
-class SessionServiceProvider extends Session implements \MyMVC\Core\Providers\ApplicationServiceProviderInterface   // => /framework/core/providers/ApplicationServiceProviderInterface
+class SessionServiceProvider extends Session implements ProviderInterface   // => /framework/core/providers/ApplicationServiceProviderInterface
 {
     /**
      * Indicates the state that sessionProvider can provide.

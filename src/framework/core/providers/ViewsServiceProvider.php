@@ -8,17 +8,17 @@ use \MyMVC\Core\Views\View as View;
 class ViewsServiceProvider extends View implements ProviderInterface
 {
     /**
-     * Indicates the state that ViewProvider can provide.
+     * Indicates the state that ViewServiceProvider can provide.
      * 
-     * ViewProviderが提供可能な状態を表します。
+     * ViewServiceProviderが提供可能な状態を表します。
      */
     const READY = TRUE;
 
 
     /**
-     * Indicates the state of ViewProvider.
+     * Indicates the state of ViewServiceProvider.
      * 
-     * ViewProviderの状態を表します。
+     * ViewServiceProviderの状態を表します。
      *
      * @var boolean
      */
@@ -27,6 +27,7 @@ class ViewsServiceProvider extends View implements ProviderInterface
 
     public static $views;
 
+    
     public static function register()
     {
         if( !isset( self::$views ) ){

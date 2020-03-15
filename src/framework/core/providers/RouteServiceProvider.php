@@ -16,7 +16,7 @@ class RouteServiceProvider extends Route implements ProviderInterface
 
 
     /**
-     * Indicates the state of RoutenProvider.
+     * Indicates the state of RouteProvider.
      * 
      * RouteProviderの状態を表します。
      *
