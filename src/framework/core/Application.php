@@ -31,11 +31,7 @@ abstract class Application extends Middleware
         "session" => \MyMVC\Core\Storage\Providers\SessionServiceProvider::class,       // => ./storage/providers/SessionServiceProvider.php
         "auth" => \MyMVC\Core\Providers\AuthServiceProvider::class,                     // => ./providers/AuthServiceProvider.php
         "route" => \MyMVC\Core\Providers\RouteServiceProvider::class,                   // => ./providers/RouteServiceProvider.php
-        "broadcasting" => \MyMVC\Core\Providers\BroadcastingServiceProvider::class,     // => ./providers/BroadcastingServiceProvider.php
-        "exceptions" => \MyMVC\Core\Providers\ExceptionsServiceProvider::class,         // => ./providers/ExceptionsServiceProvider.php
-        "pagenation" => \MyMVC\Core\Providers\PagenationServiceProvider::class,         // => ./providers/PagenationServiceProvider.php
-        "validation" => \MyMVC\Core\Providers\ValidationServiceProvider::class,         // => ./providers/ValidationServiceProvider.php
-        "views" => \MyMVC\Core\Providers\ViewsServiceProvider::class                    // => ./providers/ViewsServiceProvider.php
+        "model" => \MyMVC\Model\ModelServiceProvider::class,                            // => /framework/model/ModelServiceProvider.php
     ];
 
 

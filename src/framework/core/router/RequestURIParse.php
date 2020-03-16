@@ -2,10 +2,9 @@
 
 namespace MyMVC\Core\Router;
 
-class RequestURIAnalysis
+class RequestURIParse
 {
     public static function Parse()
     {
-        return parse_url( $_SERVER[ "REQUEST_URI" ] );
     }
 }

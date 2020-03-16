@@ -30,9 +30,7 @@ abstract class RequestMethodMapper extends RouteTree
         $var = [ $method => $option ];
 
         for( $index = count( $uri ) - 1; $uri[ $index ] !== NULL; $index -- ){
-            $tree = [
-                $uri[ $index ] => $var
-            ];
+            $tree = [ $uri[ $index ] => $var ];
             $var = $tree;
         }
         $this->routingTree = array_replace_recursive( $this->routingTree, $tree );

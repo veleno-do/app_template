@@ -32,7 +32,7 @@ abstract class App
     public function getResponse()
     {
         if( $this->route::$STATUS ){
-            $this->response = $this->route->evaluation( $this );
+            $this->response = $this->route->evaluate();
         }
     }
 
@@ -73,7 +73,7 @@ abstract class App
      * 
      * @return  void
      */
-    public function paramRegister()
+    public function callProvider()
     {
         $array = array();
         $referrer = new \ReflectionClass( static::class );
@@ -122,8 +122,11 @@ abstract class App
      */
     public function __construct()
     {
-        $this->paramRegister();
-
-        $this->init();
+        $this->callProvider();
+        $this->init();echo var_dump( $this );exit;
+        switch( $this->checkSession() ){
+            case "Y": $this->user = $this->auth->authorization->entry(); break;
+            case "N": $this->user = $this->auth->authentication->entry(); break;
+        }
     }
 }

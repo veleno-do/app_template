@@ -5,7 +5,7 @@ namespace MyMVC\Core\Providers;
 use \MyMVC\Core\Providers\ApplicationServiceProviderInterface as ProviderInterface;
 use \MyMVC\Core\Auth\Auth as Auth;
 
-class AuthServiceProvider extends Auth implements ProviderInterface
+class AuthServiceProvider implements ProviderInterface
 {
     /**
      * Indicates the state that AuthServiceProvider can provide.
@@ -39,8 +39,13 @@ class AuthServiceProvider extends Auth implements ProviderInterface
 
     public function boot( $authInstance )
     {
+        $auth = new \ReflectionClass( Auth::class );
+        foreach( $auth->getConstants() as $Key => $Value ){
+            foreach( $Value as $key => $value ){
+                $authInstance->$key = new $value;
+            }
+        }
         self::$STATUS = READY;
-
         return $authInstance;
     }
 }

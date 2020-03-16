@@ -10,25 +10,35 @@
 
 namespace MyMVC\Core\Router;
 
+use \MyMVC\Core\Router\Request\AcceptGETRequest as AcceptGETRequest;
+use \MyMVC\Core\Router\Request\AcceptPOSTRequest as AcceptPOSTRequest;
+use \MyMVC\Core\Router\Request\AcceptPUTRequest as AcceptPUTRequest;
+use \MyMVC\Core\Router\Request\AcceptDELETERequest as AcceptDELETERequest;
+use \MyMVC\Core\Exceptions\Exceptions as Exceptions;
+
 abstract class Route extends RequestMethodMapper
 {
-    public $app;
+    public $request_uri;
+
+
+    public $parse_method;
+    public $parse_option;
 
 
     public function main()
     {
-        // Temporary response
-        $array = [
-            "infomation" => [
-                "author" => "Yuto Hayashi",
-                "age" => 21,
-                "sex" => "male",
-                "other" => [
-                    "region" => "Japan",
-                ],
-            ],
-        ];
-        return json_encode( $array, JSON_UNESCAPED_UNICODE );
+        $parse_uri = RequestURIParse::parse();
+        if( isset( $parse_uri ) ){
+            foreach( $parse_uri as $method => $option ){
+                switch( $method ){
+                    case "GET":     return new AcceptGETRequest( $option );
+                    case "POST":    return new AcceptPOSTRequest( $option );
+                    case "PUT":     return new AcceptPUTRequest( $option );
+                    case "DELETE":  return new AcceptDELETERequest( $option );
+                    default:        return new Exceptions( "HTTP/1.1 502 Bad Gateway" );
+                }
+            }
+        }
     }
 
 
@@ -42,63 +52,9 @@ abstract class Route extends RequestMethodMapper
      * @param   object  $app
      * @return  string
      */
-    public function evaluation( $app )
+    public function evaluate()
     {
-        $this->app = $app;
-        echo var_dump( get_class_methods( $this->session() ) );
-    }
-
-
-    public function cache()
-    {
-        return $this->app->cache;
-    }
-
-
-    public function cookie()
-    {
-        return $this->app->cookie;
-    }
-
-
-    public function session()
-    {
-        return $this->app->session;
-    }
-
-
-    public function auth()
-    {
-        return $this->app->auth;
-    }
-
-
-    public function broadcasting()
-    {
-        return $this->app->broadcasting;
-    }
-
-
-    public function exceptions()
-    {
-        return $this->app->exceptions;
-    }
-
-
-    public function pagenation()
-    {
-        return $this->app->pagenation;
-    }
-
-
-    public function validation()
-    {
-        return $this->app->validation;
-    }
-
-
-    public function views()
-    {
-        return $this->app->views;
+        $this->request_uri = $_SERVER[ "REQUEST_URI" ];
+        return $this->main();
     }
 }
