@@ -25,4 +25,6 @@
  * $this->delete( "<path>", "<ControllerpIdentify>or<function>" )   =>  Add rules for delete requests. Deleteリクエストのルールを追加します。
  */
 
-$this->get( "/", "view@welcome" );
+$this->get( "/", "ViewController@welcome" );
+
+$this->get( "/user/", "ViewController@user" );// => temporary

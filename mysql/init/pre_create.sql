@@ -5,6 +5,7 @@ create table IF not exists `users`
  `name`             VARCHAR(20) NOT NULL,
  `address`          VARCHAR(255) DEFAULT NULL,
  `password`         VARCHAR(255) DEFAULT NULL,
+ `role`             JSON NULL,
     PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

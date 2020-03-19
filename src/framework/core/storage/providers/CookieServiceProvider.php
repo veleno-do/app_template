@@ -7,24 +7,6 @@ use \MyMVC\Core\Storage\Cookie as Cookie;                                       
 
 class CookieServiceProvider extends Cookie implements ProviderInterface
 {
-    /**
-     * Indicates the state that CookieServiceProvider can provide.
-     * 
-     * CookieServiceProviderが提供可能な状態を表します。
-     */
-    const READY = TRUE;
-
-
-    /**
-     * Indicates the state of CookieServiceProvider.
-     * 
-     * CookieServiceProviderの状態を表します。
-     *
-     * @var     boolean
-     */
-    public static $STATUS;
-
-
     public static $cookie;
 
 
@@ -39,8 +21,6 @@ class CookieServiceProvider extends Cookie implements ProviderInterface
 
     public function boot( $cookieInstance )
     {
-        self::$STATUS = READY;
-
         return $cookieInstance;
     }
 }

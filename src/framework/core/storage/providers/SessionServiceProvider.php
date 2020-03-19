@@ -13,24 +13,9 @@ namespace MyMVC\Core\Storage\Providers;
 use \MyMVC\Core\Providers\ApplicationServiceProviderInterface as ProviderInterface;     // => /framework/core/providers/ApplicationServiceProviderInterface.php
 use \MyMVC\Core\Storage\Session as Session;                                             // => /framework/core/storage/Session.php
 
-class SessionServiceProvider extends Session implements ProviderInterface   // => /framework/core/providers/ApplicationServiceProviderInterface
+class SessionServiceProvider implements ProviderInterface   // => /framework/core/providers/ApplicationServiceProviderInterface
 {
-    /**
-     * Indicates the state that sessionProvider can provide.
-     * 
-     * sessionProviderが提供可能な状態を表します。
-     */
-    const READY = TRUE;
-
-
-    /**
-     * Indicates the state of sessionProvider.
-     * 
-     * sessionProviderの状態を表します。
-     *
-     * @var boolean
-     */
-    public static $STATUS;
+    public static $status;
 
 
     /**
@@ -56,8 +41,9 @@ class SessionServiceProvider extends Session implements ProviderInterface   // =
     {
         if( !isset( self::$session ) ){
             self::$session = new self;
+            self::$status = session_start();
         }
-        return self::$session->boot( self::$session );
+        return self::$session->boot( self::$status );
     }
 
 
@@ -73,10 +59,10 @@ class SessionServiceProvider extends Session implements ProviderInterface   // =
      */
     public function boot( $sessionInstance )
     {
-        session_start();
-        
-        self::$STATUS = READY;
-
-        return $sessionInstance;
+        if( isset( $sessionInstance ) ){
+            return "In operation";
+        }else{
+            return "Not operating";
+        }
     }
 }

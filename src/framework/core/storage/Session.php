@@ -10,7 +10,7 @@
 
 namespace MyMVC\Core\Storage;
 
-abstract class Session
+class Session
 {
     /**
      * Store the value in the server session file.
@@ -21,7 +21,7 @@ abstract class Session
      * @param   string  $value
      * @return  void
      */
-    public function sessionSet( $name, $value )
+    public static function sessionSet( $name, $value )
     {
         if( isset( $name, $value ) ){
             $_SESSION[ $name ] = $value;
@@ -37,7 +37,7 @@ abstract class Session
      * @param   string  $name
      * @return  string
      */
-    public function sessionGet( $name )
+    public static function sessionGet( $name )
     {
         if( isset( $name ) ){
             return $_SESSION[ $name ];
@@ -53,7 +53,7 @@ abstract class Session
      * @param   string  $name
      * @return  boolean
      */
-    public function sessionIsset( $name )
+    public static function sessionIsset( $name )
     {
         if( isset( $name ) ){
             return isset( $_SESSION[ $name ] );
@@ -69,7 +69,7 @@ abstract class Session
      * @param   string  $name
      * @return  void
      */
-    public function sessionUnset( $name )
+    public static function sessionUnset( $name )
     {
         if( isset( $name ) ){
             unset( $_SESSION[ $name ] );
@@ -84,7 +84,7 @@ abstract class Session
      *
      * @return  void
      */
-    public function sessionDestroy()
+    public static function sessionDestroy()
     {
         $_SESSION = array();
         setcookie( session_name(), '', time()-1, '/' );

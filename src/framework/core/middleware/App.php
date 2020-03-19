@@ -32,7 +32,7 @@ abstract class App
     public function getResponse()
     {
         if( $this->route::$STATUS ){
-            $this->response = $this->route->evaluate();
+            $this->response = $this->route->evaluate( $this->user );
         }
     }
 
@@ -123,10 +123,7 @@ abstract class App
     public function __construct()
     {
         $this->callProvider();
-        $this->init();echo var_dump( $this );exit;
-        switch( $this->checkSession() ){
-            case "Y": $this->user = $this->auth->authorization->entry(); break;
-            case "N": $this->user = $this->auth->authentication->entry(); break;
-        }
+        $this->init();
+        $this->user = $this->auth->authentication->filter();
     }
 }

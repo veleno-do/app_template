@@ -10,35 +10,23 @@
 
 namespace MyMVC\Core\Router;
 
-use \MyMVC\Core\Router\Request\AcceptGETRequest as AcceptGETRequest;
-use \MyMVC\Core\Router\Request\AcceptPOSTRequest as AcceptPOSTRequest;
-use \MyMVC\Core\Router\Request\AcceptPUTRequest as AcceptPUTRequest;
-use \MyMVC\Core\Router\Request\AcceptDELETERequest as AcceptDELETERequest;
 use \MyMVC\Core\Exceptions\Exceptions as Exceptions;
+use \MyMVC\Core\Router\Controller as Controller;
 
 abstract class Route extends RequestMethodMapper
 {
-    public $request_uri;
-
-
-    public $parse_method;
-    public $parse_option;
-
-
     public function main()
     {
-        $parse_uri = RequestURIParse::parse();
-        if( isset( $parse_uri ) ){
-            foreach( $parse_uri as $method => $option ){
-                switch( $method ){
-                    case "GET":     return new AcceptGETRequest( $option );
-                    case "POST":    return new AcceptPOSTRequest( $option );
-                    case "PUT":     return new AcceptPUTRequest( $option );
-                    case "DELETE":  return new AcceptDELETERequest( $option );
-                    default:        return new Exceptions( "HTTP/1.1 502 Bad Gateway" );
-                }
-            }
+        $parse_uri = RequestURIParse::parse( $this->URIFormatting( $_SERVER[ "REQUEST_URI" ] ), $this->routingTree );
+        $result = $this->user->authorization( $parse_uri );
+        switch( $result[ "status" ] ){
+            case 200: $newResponse = new Response( new Controller( $result[ "material" ] ) );break;
+            case 401: $newResponse = new Response( new Exceptions( 401 ) );break;
+            case 403: $newResponse = new Response( new Exceptions( 403 ) );break;
+            case 404: $newResponse = new Response( new Exceptions( 404 ) );break;
         }
+        
+        return $newResponse->issue();
     }
 
 
@@ -52,9 +40,9 @@ abstract class Route extends RequestMethodMapper
      * @param   object  $app
      * @return  string
      */
-    public function evaluate()
+    public function evaluate( $user )
     {
-        $this->request_uri = $_SERVER[ "REQUEST_URI" ];
+        $this->user = $user;
         return $this->main();
     }
 }
